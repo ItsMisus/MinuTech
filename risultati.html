@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risultati Ricerca - MISUSTECH</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header e categorie -->
+    <div id="header-placeholder"></div>
+    <script src="script.js"></script>
+    <script src="search.js"></script>
+
+    <!-- Main -->
+    <main>
+        <h1 class="page-title">Risultati della ricerca</h1>
+        <div class="products" id="productsContainer">
+            <!-- Prodotti filtrati verranno caricati dinamicamente da search.js -->
+        </div>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <aside id="cartSidebar" class="cart-sidebar">
+        <h2 class="cart-title">Carrello</h2>
+        <div id="cartItems">
+            <p>Il carrello è vuoto</p>
+        </div>
+        <div class="cart-total">
+            <p>Totale: € <span id="cartTotal">0</span></p>
+        </div>
+        <div class="cart-buttons">
+            <button id="closeCart">Chiudi</button>
+            <button id="navigateHome">Naviga adesso</button>
+        </div>
+    </aside>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 MISUSTECH | Condizioni e Servizi</p>
+    </footer>
+
+</body>
+</html>

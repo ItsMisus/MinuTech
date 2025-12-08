@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prodotto non trovato - MISUSTECH</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500&display=swap" rel="stylesheet">
+   <style>
+    main {
+        text-align: center;
+        margin: 50px;
+        font-family: 'Rajdhani', sans-serif;
+    }
+    h1 {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-family: 'Rajdhani', sans-serif;
+        cursor: pointer;
+        background-color: white;
+        color: black;
+        border: 2px solid black;
+        border-radius: 5px;
+        transition: all 0.2s ease;
+    }
+    button:hover {
+        background-color: black;
+        color: white;
+        border-color: black;
+    }
+</style>
+
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('header.html')
+        .then(res => res.text())
+        .then(data => document.getElementById('header-placeholder').innerHTML = data);
+    </script>
+
+    <main>
+        <h1>Ops! Nessun prodotto trovato</h1>
+        <p>Non abbiamo trovato alcun prodotto corrispondente alla tua ricerca.</p>
+        <button onclick="window.location.href='index.html'">Torna alla Home</button>
+    </main>
+</body>
+</html>

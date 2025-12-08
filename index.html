@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MISUSTECH</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <!-- Header -->
+    <header class="header-container">
+        <div class="logo" onclick="window.location.href='index.html'">MISUSTECH</div>
+        <div class="search-language-cart">
+            <form id="searchForm">
+                <input type="text" placeholder="Cerca un PC" name="search" required>
+            </form>
+            <select id="languageDropdown">
+                <option value="it">Italiano</option>
+                <option value="en">English</option>
+            </select>
+            <button id="accountBtn">Account</button>
+            <button id="cartBtn">Carrello</button>
+        </div>
+    </header>
+
+    <!-- Categories -->
+    <nav class="categories">
+        <ul>
+            <li><a href="#">Pc Gaming</a></li>
+            <li><a href="#">Offerte</a></li>
+            <li><a href="#">Codici Sconto</a></li>
+            <li><a href="#">Contattaci</a></li>
+            <li><a href="#">Discord</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main -->
+    <main>
+        <h1 class="page-title">Best Seller</h1>
+        <div class="products" id="productsContainer">
+            <!-- I prodotti verranno caricati qui dinamicamente -->
+        </div>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <aside id="cartSidebar" class="cart-sidebar">
+        <h2 class="cart-title">Carrello</h2>
+        <div id="cartItems">
+            <p>Il carrello è vuoto</p>
+        </div>
+        <div class="cart-total">
+            <p>Totale: € <span id="cartTotal">0</span></p>
+        </div>
+        <div class="cart-buttons">
+            <button id="closeCart">Chiudi</button>
+            <button id="navigateHome">Naviga adesso</button>
+        </div>
+    </aside>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 MISUSTECH | Condizioni e Servizi</p>
+    </footer>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+</html>
