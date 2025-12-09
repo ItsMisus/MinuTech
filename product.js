@@ -45,6 +45,60 @@ fetch('products.json')
                 </div>
             `;
 
+            // ========== AGGIUNGI AL CARRELLO - CORRETTO ==========
+            const addToCartBtn = document.getElementById('addToCartBtn');
+            if(addToCartBtn) {
+                addToCartBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const productEl = document.querySelector('.product-detail-main');
+                    if(!productEl) return;
+
+                    const name = productEl.dataset.name;
+                    const price = parseFloat(productEl.dataset.price);
+                    const img = productEl.dataset.img;
+                    const desc = productEl.dataset.desc;
+                    const qtyInput = document.querySelector('#productQty');
+                    const qty = qtyInput ? parseInt(qtyInput.value) : 1;
+
+                    if(qty < 1) {
+                        alert('Inserisci una quantità valida');
+                        return;
+                    }
+
+                    // Aggiungi al carrello
+                    if(typeof cartObj !== 'undefined' && cartObj.cart) {
+                        const existing = cartObj.cart.find(p => p.name === name);
+                        if(existing) {
+                            existing.qty += qty;
+                        } else {
+                            cartObj.cart.push({name, desc, price, img, qty});
+                        }
+
+                        cartObj.updateCart();
+                        
+                        // APRI AUTOMATICAMENTE IL CARRELLO
+                        const cartSidebar = document.getElementById('cartSidebar');
+                        if(cartSidebar) {
+                            cartSidebar.classList.add('active');
+                        }
+                        
+                        // Feedback visivo
+                        this.textContent = '✓ Aggiunto al carrello';
+                        this.style.background = '#27ae60';
+                        
+                        setTimeout(() => {
+                            this.textContent = 'Aggiungi al carrello';
+                            this.style.background = '';
+                        }, 1500);
+                    } else {
+                        console.error('cartObj non trovato');
+                        alert('Errore: carrello non inizializzato');
+                    }
+                });
+            }
+
             // Carica e mostra media recensioni
             try {
                 const storageKey = `reviews_${productName}`;

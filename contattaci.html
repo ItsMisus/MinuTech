@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PC Gaming - MISUSTECH</title>
+    <title>Contattaci - MISUSTECH</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500&display=swap" rel="stylesheet">
 </head>
@@ -20,7 +20,7 @@
     </div>
 
     <!-- Header -->
-  <!-- NUOVO HEADER STRUTTURA - Copia in TUTTI gli HTML -->
+   <!-- NUOVO HEADER STRUTTURA - Copia in TUTTI gli HTML -->
 <header class="header-container">
     <!-- Logo Sinistra -->
     <div class="logo" onclick="window.location.href='index.html'">MISUSTECH</div>
@@ -72,36 +72,32 @@
 
     <!-- Main -->
     <main>
-        <h1 class="page-title">PC Gaming</h1>
-        
-        <!-- Filtri -->
-        <div class="filters">
-            <h2>Filtra per categoria</h2>
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-category="all">Tutti i prodotti</button>
-                <button class="filter-btn" data-category="bestseller">Best Sellers</button>
-                <button class="filter-btn" data-category="pronta-consegna">Pronta Consegna</button>
-                <button class="filter-btn" data-category="rtx5000">Nvidia RTX 5000</button>
-                <button class="filter-btn" data-category="rx9000">Radeon RX 9000</button>
-                <button class="filter-btn" data-category="personalizzati">Personalizzati</button>
-                <button class="filter-btn" data-category="offerte">Offerte Settimanali ❤</button>
-                <button class="filter-btn" data-category="white">White Edition</button>
-                <button class="filter-btn" data-category="console-killer">Console Killer</button>
-            </div>
-        </div>
-        
-        <div class="products" id="productsContainer">
-            <!-- Prodotti caricati dinamicamente -->
-        </div>
-        
-        <!-- Paginazione -->
-        <div class="pagination"></div>
-        
-        <!-- Bottone PC Custom -->
-        <div class="custom-pc-container">
-            <h2>Crea il tuo PC Gaming Personalizzato</h2>
-            <p>Non trovi la configurazione che fa per te? Costruisci il tuo PC scegliendo ogni singolo componente!</p>
-            <a href="custom-pc.html" class="custom-pc-btn">🎮 Crea PC Personalizzato</a>
+        <div class="contact-page" id="contact">
+            <h1>Contattaci</h1>
+            
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cognome">Cognome:</label>
+                    <input type="text" id="cognome" name="cognome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="telefono">Numero di Telefono:</label>
+                    <input type="tel" id="telefono" name="telefono" placeholder="Es. 3771234567" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="messaggio">Corpo del Messaggio:</label>
+                    <textarea id="messaggio" name="messaggio" required></textarea>
+                </div>
+                
+                <button type="submit">Invia ora</button>
+            </form>
         </div>
     </main>
 
@@ -140,6 +136,20 @@
 
     <!-- Script -->
     <script src="script.js"></script>
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nome = document.getElementById('nome').value;
+            const cognome = document.getElementById('cognome').value;
+            const telefono = document.getElementById('telefono').value;
+            const messaggio = document.getElementById('messaggio').value;
+            
+            alert(`Grazie ${nome}! Il tuo messaggio è stato inviato.\n\nTi contatteremo al numero ${telefono} al più presto.`);
+            
+            this.reset();
+        });
+    </script>
 <script src="languages.js"></script>
 </body>
 </html>
