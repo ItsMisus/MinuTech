@@ -46,6 +46,7 @@ function createHeader() {
                 <li><a href="offerte.html">Offerte</a></li>
                 <li><a href="chisiamo.html">Chi siamo</a></li>
                 <li><a href="discord.html">Discord</a></li>
+                <li><a href="contattaci.html">Contattaci</a></li>
             </ul>
         </nav>
     `;
@@ -72,7 +73,7 @@ function createFooter() {
                 <p><strong>MISUSTECH s.r.l.</strong></p>
                 <p>Partita IVA: <strong>IT01234567890</strong></p>
                 <p>Via Roma 123, 76121<br>Barletta (BA) - Italia</p>
-                <p><strong>Telefono:</strong> 377 590 0298<br><strong>Email:</strong> francesco.minutiello08@gmail.com</p>
+                <p><strong>Telefono:</strong> 377 590 0298<br><strong>Email:</strong> misustech@gmail.com</p>
             </div>
 
             <div class="footer-section">
