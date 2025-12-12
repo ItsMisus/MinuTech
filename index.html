@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIRA - PC Gaming Professionali</title>
+    <title>MIRA - PC Gaming di Alta Qualità</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    
     <!-- HEADER -->
     <header class="header">
         <div class="nav-container">
@@ -51,20 +52,22 @@
         </div>
     </header>
 
-    <!-- SEARCH OVERLAY -->
-    <div class="search-overlay" id="searchOverlay">
-        <div class="search-container">
-            <input type="text" placeholder="Cerca..." class="search-input">
-            <button class="search-close" id="searchClose">✕</button>
-        </div>
+<!-- SEARCH OVERLAY - SUBITO DOPO HEADER -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-container">
+        <input type="text" placeholder="Cerca..." class="search-input" id="mainSearchInput">
+        <button class="search-close" id="searchClose">✕</button>
     </div>
+</div>
+
+<!-- resto del contenuto -->
 
     <!-- HERO SECTION -->
     <section class="hero">
         <div class="hero-content">
-            <h1>I PC Gaming Più Potenti</h1>
-            <p>Presentazione della Serie Performance</p>
-            <a href="pcgaming.html" class="btn-hero">Shop Now</a>
+            <h1>Benvenuto su MIRA</h1>
+            <p>PC Gaming di alta qualità, configurazioni ottimizzate e supporto professionale</p>
+            <a href="pcgaming.html" class="btn-hero">Scopri i prodotti</a>
         </div>
     </section>
 
@@ -72,9 +75,9 @@
     <section class="products-section">
         <div class="container">
             <h2 class="section-title">Novità</h2>
-
-            <div class="products-grid" id="homeProductsGrid">
-                <!-- I prodotti vengono caricati dinamicamente -->
+            
+            <div class="products-grid-home" id="homeProductsGrid">
+                <!-- Prodotti caricati dinamicamente da product.js -->
             </div>
 
             <div class="view-all-container">
@@ -83,7 +86,9 @@
         </div>
     </section>
 
-    <!-- WHY MIRA SECTION -->
+
+
+    <!-- WHY SECTION -->
     <section class="why-section">
         <div class="container">
             <h2>Why MIRA PC?</h2>
@@ -97,7 +102,7 @@
                         </svg>
                     </div>
                     <h3>Performance</h3>
-                    <p>PC ottimizzati per garantire le massime prestazioni in gaming, streaming e creazione di contenuti.</p>
+                    <p>Configurazioni di ultima generazione che garantiscono frame rate elevati e gameplay fluido.</p>
                 </div>
 
                 <div class="feature">
@@ -108,7 +113,7 @@
                         </svg>
                     </div>
                     <h3>Qualità</h3>
-                    <p>Utilizziamo solo componenti di altissima qualità testati rigorosamente per garantire affidabilità e durata.</p>
+                    <p>Solo componenti premium accuratamente selezionati e testati per garantire stabilità e affidabilità.</p>
                 </div>
 
                 <div class="feature">
@@ -118,7 +123,7 @@
                         </svg>
                     </div>
                     <h3>Design</h3>
-                    <p>Case eleganti e moderni con illuminazione RGB personalizzabile per un setup perfetto.</p>
+                    <p>Estetica moderna e curata con illuminazione RGB personalizzabile e case eleganti.</p>
                 </div>
 
                 <div class="feature">
@@ -129,7 +134,7 @@
                         </svg>
                     </div>
                     <h3>Semplicità</h3>
-                    <p>Gestione del cavo ottimale, accesso facilitato ai componenti e configurazione immediata.</p>
+                    <p>Plug and play immediato, cable management ottimizzato e accesso semplificato ai componenti.</p>
                 </div>
             </div>
         </div>
@@ -139,7 +144,6 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-grid">
-                <!-- Contact -->
                 <div class="footer-column">
                     <h4>Contact</h4>
                     <ul>
@@ -148,7 +152,6 @@
                     </ul>
                 </div>
 
-                <!-- About MIRA -->
                 <div class="footer-column">
                     <h4>About MIRA</h4>
                     <ul>
@@ -157,7 +160,6 @@
                     </ul>
                 </div>
 
-                <!-- Community -->
                 <div class="footer-column">
                     <h4>Community</h4>
                     <ul>
@@ -165,14 +167,12 @@
                     </ul>
                 </div>
 
-                <!-- For the love of the game -->
                 <div class="footer-column footer-brand">
                     <h4>Powered by the 💜 of the game.</h4>
-                    <p>Da MIRA rendiamo il gaming su PC semplice e alla portata di tutti. Che tu voglia un sistema completamente personalizzato o un modello preassemblato pronto all’uso, ti offriamo soluzioni affidabili, componenti di qualità e un supporto competente.</p>
+                    <p>Da MIRA rendiamo il gaming su PC semplice e alla portata di tutti. Che tu voglia un sistema completamente personalizzato o un modello preassemblato pronto all'uso, ti offriamo soluzioni affidabili, componenti di qualità e un supporto competente.</p>
                 </div>
             </div>
 
-            <!-- Social Icons -->
             <div class="footer-social">
                 <a href="#" aria-label="Facebook">
                     <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
@@ -196,22 +196,19 @@
                 </a>
             </div>
 
-            <!-- Language Selector -->
             <div class="footer-language">
-                <select>
-                    <option>Italiano</option>
-                    <option>English</option>
+                <select id="footerLangSelect">
+                    <option value="it">Italiano</option>
+                    <option value="en">English</option>
                 </select>
             </div>
 
-            <!-- Bottom Links -->
             <div class="footer-bottom">
                 <p>© 2025 - MIRA</p>
                 <div class="footer-links">
                     <a href="#">Legal</a>
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms of Service</a>
-                    <a href="#">Do Not Sell or Share My Personal Information</a>
                 </div>
             </div>
         </div>
@@ -229,6 +226,7 @@
     </div>
 
     <script src="script.js"></script>
-    <script src="home.js"></script>
+    <script src="product.js"></script>
+    <script src="components.js"></script>
 </body>
 </html>

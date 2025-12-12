@@ -121,6 +121,3 @@ function initHeaderEvents() {
         });
     }
 }
-
-// CARICA COMPONENTI AL DOM READY
-document.addEventListener('DOMContentLoaded', initComponents);

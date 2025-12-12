@@ -1,6 +1,10 @@
-[
- {
-    "name": "Kraken Elite",
+{}
+  "scopes": [],
+  "apiResources": [],
+  "proxies": [],
+  "products": [
+    {
+      "name": "Kraken Elite",
     "price": 849,
     "desc": "PC Gaming potente con Ryzen 7 di ultima generazione, 32GB RAM, RTX 4070 Ti e SSD ultraveloce da 1TB.",
     "img": "https://breunor.com/cdn/shop/files/rgb_336b3060-f6f0-496f-9bcd-606ab680b4c4.jpg?v=1762785752&width=700",
@@ -112,4 +116,3 @@
     "category": "offerte"
 }
 
-]

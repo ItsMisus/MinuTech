@@ -1,208 +1,443 @@
-fetch('products.json')
-    .then(res => res.json())
-    .then(async (products) => {
-        
-        const params = new URLSearchParams(window.location.search);
-        const productName = params.get('name');
-        const product = products.find(p => p.name === productName);
+// ==================== PRODUCTS DATABASE CON ID ====================
+const DEFAULT_PRODUCTS = [
+    {
+        id: 'prod-001',
+        name: "MIRA Alpha RTX 5090",
+        price: 3499.99,
+        discountPrice: null,
+        discount: false,
+        desc: "Il massimo delle prestazioni con RTX 5090",
+        img: "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=500",
+        category: "novità",
+        tags: ["bestseller", "rtx5000", "novità"],
+        specs: {
+            cpu: "Intel Core i9-14900K",
+            gpu: "NVIDIA RTX 5090 24GB",
+            ram: "64GB DDR5 6000MHz",
+            storage: "2TB NVMe Gen5",
+            psu: "1200W 80+ Platinum"
+        }
+    },
+    {
+        id: 'prod-002',
+        name: "MIRA Beta RX 9070 XT",
+        price: 2799.99,
+        discountPrice: 2499.99,
+        discount: true,
+        desc: "Potenza AMD di ultima generazione",
+        img: "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=500",
+        category: "novità",
+        tags: ["rx9000", "pronta-consegna", "novità"],
+        specs: {
+            cpu: "AMD Ryzen 9 7950X3D",
+            gpu: "AMD RX 9070 XT 24GB",
+            ram: "32GB DDR5 6000MHz",
+            storage: "2TB NVMe Gen4",
+            psu: "1000W 80+ Gold"
+        }
+    },
+    {
+        id: 'prod-003',
+        name: "MIRA White Edition",
+        price: 2299.99,
+        discountPrice: null,
+        discount: false,
+        desc: "Design elegante tutto bianco",
+        img: "https://images.unsplash.com/photo-1593640495253-23196b27a87f?w=500",
+        category: "novità",
+        tags: ["white", "bestseller", "novità"],
+        specs: {
+            cpu: "Intel Core i7-14700K",
+            gpu: "NVIDIA RTX 4080 SUPER",
+            ram: "32GB DDR5 5600MHz",
+            storage: "1TB NVMe Gen4",
+            psu: "850W 80+ Gold"
+        }
+    },
+    {
+        id: 'prod-004',
+        name: "MIRA Console Killer",
+        price: 1299.99,
+        discountPrice: 1099.99,
+        discount: true,
+        desc: "Prestazioni superiori a qualsiasi console",
+        img: "https://images.unsplash.com/photo-1624705002806-5d72df19c3ad?w=500",
+        category: "novità",
+        tags: ["console-killer", "pronta-consegna", "bestseller", "novità"],
+        specs: {
+            cpu: "AMD Ryzen 5 7600X",
+            gpu: "AMD RX 7700 XT 12GB",
+            ram: "16GB DDR5 5200MHz",
+            storage: "1TB NVMe Gen4",
+            psu: "750W 80+ Bronze"
+        }
+    },
+    {
+        id: 'prod-005',
+        name: "MIRA Gaming Pro",
+        price: 1799.99,
+        discountPrice: null,
+        discount: false,
+        desc: "Equilibrio perfetto prezzo/prestazioni",
+        img: "https://images.unsplash.com/photo-1616588589676-62b3bd4ff6d2?w=500",
+        category: "all",
+        tags: ["bestseller", "pronta-consegna"],
+        specs: {
+            cpu: "Intel Core i5-14600K",
+            gpu: "NVIDIA RTX 4070 SUPER",
+            ram: "32GB DDR5 5600MHz",
+            storage: "1TB NVMe Gen4",
+            psu: "750W 80+ Gold"
+        }
+    },
+    {
+        id: 'prod-006',
+        name: "MIRA Creator Station",
+        price: 3299.99,
+        discountPrice: 2999.99,
+        discount: true,
+        desc: "Per content creator professionisti",
+        img: "https://images.unsplash.com/photo-1580618124872-e06e5e9281ab?w=500",
+        category: "all",
+        tags: ["rtx5000"],
+        specs: {
+            cpu: "AMD Ryzen 9 7950X",
+            gpu: "NVIDIA RTX 5080 16GB",
+            ram: "64GB DDR5 6000MHz",
+            storage: "4TB NVMe Gen4",
+            psu: "1000W 80+ Platinum"
+        }
+    }
+];
 
-        const detailContainer = document.querySelector('.product-detail');
+// Inizializza prodotti
+const PRODUCTS = JSON.parse(localStorage.getItem('miraProducts')) || DEFAULT_PRODUCTS;
+if (!localStorage.getItem('miraProducts')) {
+    localStorage.setItem('miraProducts', JSON.stringify(DEFAULT_PRODUCTS));
+}
 
-        if(product){
-            const actualPrice = product.discount ? product.discountPrice : product.price;
-            
-            let priceHTML = '';
-            if(product.discount) {
-                priceHTML = `
-                    <p><span style="color:#888; text-decoration:line-through; font-size:1.5rem;">€ ${product.price.toFixed(2)}</span></p>
-                    <p class="price">€ ${product.discountPrice.toFixed(2)}</p>
-                `;
-            } else {
-                priceHTML = `<p class="price">€ ${product.price.toFixed(2)}</p>`;
-            }
-            
-            detailContainer.innerHTML = `
-                <div class="product-detail-main" data-name="${product.name}" data-price="${actualPrice}" data-desc="${product.desc}" data-img="${product.img}">
-                    <div class="product-image">
-                        <img src="${product.img}" alt="${product.name}">
-                        <div class="product-rating" id="productRating"></div>
-                    </div>
-                    <div class="product-info">
-                        <h1>${product.name}</h1>
-                        <p class="desc">${product.desc}</p>
-                        ${product.components ? `<p><strong>Componenti:</strong> ${product.components}</p>` : ''}
-                        ${priceHTML}
-                        <div class="quantity-section">
-                            <label>Quantità: </label>
-                            <input type="number" id="productQty" value="1" min="1">
-                            <button id="addToCartBtn">Aggiungi al carrello</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="also-like">
-                    <h2>Potrebbe piacerti anche:</h2>
-                    <div class="also-products"></div>
-                </div>
-            `;
+// ==================== CALCOLA MEDIA RECENSIONI ====================
+function getAverageRating(productId) {
+    const reviews = JSON.parse(localStorage.getItem('miraReviews') || '{}');
+    const productReviews = reviews[productId] || [];
+    if (productReviews.length === 0) return 0;
+    const sum = productReviews.reduce((acc, review) => acc + review.rating, 0);
+    return sum / productReviews.length;
+}
 
-            // ========== AGGIUNGI AL CARRELLO - CORRETTO ==========
-            const addToCartBtn = document.getElementById('addToCartBtn');
-            if(addToCartBtn) {
-                addToCartBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
+function getReviewCount(productId) {
+    const reviews = JSON.parse(localStorage.getItem('miraReviews') || '{}');
+    const productReviews = reviews[productId] || [];
+    return productReviews.length;
+}
 
-                    const productEl = document.querySelector('.product-detail-main');
-                    if(!productEl) return;
-
-                    const name = productEl.dataset.name;
-                    const price = parseFloat(productEl.dataset.price);
-                    const img = productEl.dataset.img;
-                    const desc = productEl.dataset.desc;
-                    const qtyInput = document.querySelector('#productQty');
-                    const qty = qtyInput ? parseInt(qtyInput.value) : 1;
-
-                    if(qty < 1) {
-                        alert('Inserisci una quantità valida');
-                        return;
-                    }
-
-                    // Aggiungi al carrello
-                    if(typeof cartObj !== 'undefined' && cartObj.cart) {
-                        const existing = cartObj.cart.find(p => p.name === name);
-                        if(existing) {
-                            existing.qty += qty;
-                        } else {
-                            cartObj.cart.push({name, desc, price, img, qty});
-                        }
-
-                        cartObj.updateCart();
-                        
-                        // APRI AUTOMATICAMENTE IL CARRELLO
-                        const cartSidebar = document.getElementById('cartSidebar');
-                        if(cartSidebar) {
-                            cartSidebar.classList.add('active');
-                        }
-                        
-                        // Feedback visivo
-                        this.textContent = '✓ Aggiunto al carrello';
-                        this.style.background = '#27ae60';
-                        
-                        setTimeout(() => {
-                            this.textContent = 'Aggiungi al carrello';
-                            this.style.background = '';
-                        }, 1500);
-                    } else {
-                        console.error('cartObj non trovato');
-                        alert('Errore: carrello non inizializzato');
-                    }
-                });
-            }
-
-            // Carica e mostra media recensioni
-            try {
-                const storageKey = `reviews_${productName}`;
-                const result = await window.storage.get(storageKey, true);
-                
-                const ratingContainer = detailContainer.querySelector('#productRating');
-                
-                if(result && result.value) {
-                    const reviews = JSON.parse(result.value);
-                    const average = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
-                    const roundedAvg = Math.round(average);
-
-                    for(let i = 1; i <= 5; i++){
-                        const star = document.createElement('span');
-                        star.className = 'star';
-                        if(i <= roundedAvg) {
-                            star.classList.add('filled');
-                        }
-                        star.innerHTML = '★';
-                        star.addEventListener('click', () => {
-                            window.location.href = `reviews.html?name=${encodeURIComponent(product.name)}`;
-                        });
-                        ratingContainer.appendChild(star);
-                    }
-
-                    const reviewText = document.createElement('p');
-                    reviewText.style.color = '#9b59b6';
-                    reviewText.style.fontSize = '0.95rem';
-                    reviewText.style.marginTop = '8px';
-                    reviewText.style.cursor = 'pointer';
-                    reviewText.textContent = `${average.toFixed(1)} stelle (${reviews.length} recensioni) - Clicca per leggere`;
-                    reviewText.addEventListener('click', () => {
-                        window.location.href = `reviews.html?name=${encodeURIComponent(product.name)}`;
-                    });
-                    ratingContainer.appendChild(reviewText);
-                } else {
-                    // Nessuna recensione
-                    for(let i = 1; i <= 5; i++){
-                        const star = document.createElement('span');
-                        star.className = 'star';
-                        star.innerHTML = '★';
-                        star.addEventListener('click', () => {
-                            window.location.href = `reviews.html?name=${encodeURIComponent(product.name)}`;
-                        });
-                        ratingContainer.appendChild(star);
-                    }
-
-                    const reviewText = document.createElement('p');
-                    reviewText.style.color = '#aaa';
-                    reviewText.style.fontSize = '0.9rem';
-                    reviewText.style.marginTop = '8px';
-                    reviewText.style.cursor = 'pointer';
-                    reviewText.textContent = 'Nessuna recensione - Sii il primo!';
-                    reviewText.addEventListener('click', () => {
-                        window.location.href = `reviews.html?name=${encodeURIComponent(product.name)}`;
-                    });
-                    ratingContainer.appendChild(reviewText);
-                }
-            } catch(error) {
-                console.log('Errore caricamento recensioni:', error);
-                const ratingContainer = detailContainer.querySelector('#productRating');
-                for(let i = 1; i <= 5; i++){
-                    const star = document.createElement('span');
-                    star.className = 'star';
-                    star.innerHTML = '★';
-                    star.addEventListener('click', () => {
-                        window.location.href = `reviews.html?name=${encodeURIComponent(product.name)}`;
-                    });
-                    ratingContainer.appendChild(star);
-                }
-            }
-
-            // Suggerimenti
-            const suggestionsContainer = detailContainer.querySelector('.also-products');
-            const otherProducts = products
-                .filter(p => p.name !== productName)
-                .sort(() => Math.random() - 0.5)
-                .slice(0, 4);
-            
-            otherProducts.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'also-product';
-                const displayPrice = p.discount ? p.discountPrice : p.price;
-                div.innerHTML = `
-                    <img src="${p.img}" alt="${p.name}">
-                    <h4>${p.name}</h4>
-                    <p>€ ${displayPrice.toFixed(2)}</p>
-                    <p style="font-size:0.85rem; color:#ccc;">${p.desc.substring(0, 60)}...</p>
-                `;
-                div.addEventListener('click', () => {
-                    window.location.href = `product.html?name=${encodeURIComponent(p.name)}`;
-                });
-                suggestionsContainer.appendChild(div);
-            });
-
+// ==================== STELLA RATING HTML ====================
+function createStarRating(rating, reviewCount) {
+    let starsHTML = '<div class="product-rating"><div class="stars">';
+    for (let i = 1; i <= 5; i++) {
+        if (i <= Math.round(rating)) {
+            starsHTML += '<span class="star filled">★</span>';
         } else {
-            detailContainer.innerHTML = `
-                <div style="text-align:center; padding:50px; color:#aaa;">
-                    <h2>Prodotto non trovato</h2>
-                    <p>Scusa, il prodotto che stai cercando non esiste.</p>
-                    <a href="index.html" style="color:#9b59b6; text-decoration:none; margin-top:20px; display:inline-block;">← Torna alla home</a>
+            starsHTML += '<span class="star">★</span>';
+        }
+    }
+    starsHTML += '</div>';
+    starsHTML += `<span class="rating-count">(${reviewCount})</span>`;
+    starsHTML += '</div>';
+    return starsHTML;
+}
+
+// ==================== PRODUCTS DISPLAY ====================
+function displayProducts(products, containerId = 'productsGrid') {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    if (products.length === 0) {
+        container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#aaa; padding:40px;">Nessun prodotto trovato</p>';
+        return;
+    }
+
+    products.forEach(prod => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        
+        const finalPrice = prod.discount ? prod.discountPrice : prod.price;
+        const avgRating = getAverageRating(prod.id);
+        const reviewCount = getReviewCount(prod.id);
+        
+        card.innerHTML = `
+            ${prod.discount ? '<span class="discount-badge">OFFERTA</span>' : ''}
+            <div class="product-image">
+                <img src="${prod.img}" alt="${prod.name}" loading="lazy">
+            </div>
+            <div class="product-info">
+                <h3>${prod.name}</h3>
+                <p class="product-desc">${prod.desc}</p>
+                ${createStarRating(avgRating, reviewCount)}
+                <div class="product-price">
+                    ${prod.discount ? `
+                        <span class="original-price">€${prod.price.toFixed(2)}</span>
+                        <span class="current-price">€${prod.discountPrice.toFixed(2)}</span>
+                    ` : `
+                        <span class="current-price">€${prod.price.toFixed(2)}</span>
+                    `}
                 </div>
-            `;
+            </div>
+        `;
+
+        card.addEventListener('click', () => {
+            window.location.href = `product.html?id=${prod.id}`;
+        });
+
+        container.appendChild(card);
+    });
+}
+
+// ==================== INDEX PAGE - SHOW NEW PRODUCTS ====================
+if (document.getElementById('homeProductsGrid')) {
+    const newProducts = PRODUCTS.filter(p => p.tags && p.tags.includes('novità')).slice(0, 4);
+    displayProducts(newProducts, 'homeProductsGrid');
+}
+
+// ==================== PC GAMING PAGE - FILTERS & PAGINATION ====================
+if (document.getElementById('productsGrid') && window.location.pathname.includes('pcgaming')) {
+    let filteredProducts = [...PRODUCTS];
+    let currentPage = 1;
+    const PRODUCTS_PER_PAGE = 9;
+
+    function updateProductsCount() {
+        const countEl = document.getElementById('productsCount');
+        if (countEl) {
+            countEl.textContent = `${filteredProducts.length} prodotti`;
+        }
+    }
+
+    function displayPage(page) {
+        const start = (page - 1) * PRODUCTS_PER_PAGE;
+        const end = start + PRODUCTS_PER_PAGE;
+        const pageProducts = filteredProducts.slice(start, end);
+        
+        displayProducts(pageProducts);
+        updatePagination();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updatePagination() {
+        const paginationEl = document.querySelector('.pagination-modern');
+        if (!paginationEl) return;
+
+        const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+        paginationEl.innerHTML = '';
+
+        if (totalPages <= 1) return;
+
+        // Previous button
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'pagination-arrow';
+        prevBtn.innerHTML = '←';
+        prevBtn.disabled = currentPage === 1;
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                displayPage(currentPage);
+            }
+        });
+        paginationEl.appendChild(prevBtn);
+
+        // Page numbers
+        for (let i = 1; i <= totalPages; i++) {
+            const pageBtn = document.createElement('button');
+            pageBtn.className = `page-number ${i === currentPage ? 'active' : ''}`;
+            pageBtn.textContent = i;
+            pageBtn.addEventListener('click', () => {
+                currentPage = i;
+                displayPage(currentPage);
+            });
+            paginationEl.appendChild(pageBtn);
         }
 
-    })
-    .catch(err => console.error('Errore caricamento prodotto:', err));
+        // Next button
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'pagination-arrow';
+        nextBtn.innerHTML = '→';
+        nextBtn.disabled = currentPage === totalPages;
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayPage(currentPage);
+            }
+        });
+        paginationEl.appendChild(nextBtn);
+    }
+
+    function filterProducts(tag) {
+        if (tag === 'all') {
+            filteredProducts = [...PRODUCTS];
+        } else {
+            filteredProducts = PRODUCTS.filter(p => p.tags && p.tags.includes(tag));
+        }
+        currentPage = 1;
+        updateProductsCount();
+        displayPage(1);
+    }
+
+    // Filter buttons
+    document.querySelectorAll('.filter-category').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-category').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const category = btn.dataset.category;
+            filterProducts(category);
+        });
+    });
+
+    // Sort dropdown
+    const sortSelect = document.getElementById('sortSelect');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+            const sortValue = e.target.value;
+            
+            switch(sortValue) {
+                case 'price-asc':
+                    filteredProducts.sort((a, b) => {
+                        const priceA = a.discount ? a.discountPrice : a.price;
+                        const priceB = b.discount ? b.discountPrice : b.price;
+                        return priceA - priceB;
+                    });
+                    break;
+                case 'price-desc':
+                    filteredProducts.sort((a, b) => {
+                        const priceA = a.discount ? a.discountPrice : a.price;
+                        const priceB = b.discount ? b.discountPrice : b.price;
+                        return priceB - priceA;
+                    });
+                    break;
+                case 'name':
+                    filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+            }
+            
+            displayPage(currentPage);
+        });
+    }
+
+    // Initial display
+    updateProductsCount();
+    displayPage(1);
+}
+
+// ==================== PRODUCT DETAIL PAGE ====================
+if (window.location.pathname.includes('product.html')) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+    
+    if (productId) {
+        const product = PRODUCTS.find(p => p.id === productId);
+        
+        if (product) {
+            const main = document.querySelector('.product-detail');
+            if (main) {
+                const finalPrice = product.discount ? product.discountPrice : product.price;
+                const avgRating = getAverageRating(product.id);
+                const reviewCount = getReviewCount(product.id);
+                
+                main.innerHTML = `
+                    <div class="product-detail-container">
+                        <div class="product-detail-images">
+                            <div class="main-image">
+                                <img src="${product.img}" alt="${product.name}">
+                            </div>
+                        </div>
+                        
+                        <div class="product-detail-info">
+                            <h1>${product.name}</h1>
+                            
+                            <div class="product-rating-detail">
+                                ${createStarRating(avgRating, reviewCount)}
+                                <span class="rating-text">
+                                    ${avgRating > 0 ? `${avgRating.toFixed(1)} stelle` : 'Nessuna recensione'}
+                                </span>
+                            </div>
+                            
+                            <p class="product-detail-desc">${product.desc}</p>
+                            
+                            <div class="product-options">
+                                <h3>Specifiche Tecniche</h3>
+                                <div class="specs-list">
+                                    ${Object.entries(product.specs).map(([key, value]) => `
+                                        <div class="spec-item">
+                                            <strong>${key.toUpperCase()}:</strong> ${value}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="product-detail-price">
+                                ${product.discount ? `
+                                    <span class="original-price">€${product.price.toFixed(2)}</span>
+                                    <span class="current-price">€${product.discountPrice.toFixed(2)}</span>
+                                ` : `
+                                    <span class="current-price">€${product.price.toFixed(2)}</span>
+                                `}
+                            </div>
+                            
+                            <button class="btn-add-to-cart-detail" data-product='${JSON.stringify({id: product.id, name: product.name, price: finalPrice, img: product.img, desc: product.desc})}'>
+                                Aggiungi al carrello
+                            </button>
+                            
+                            <a href="product-reviews.html?id=${product.id}" class="btn-reviews">
+                                Vedi tutte le recensioni (${reviewCount})
+                            </a>
+                            
+                            <a href="pcgaming.html" class="btn-back">← Torna ai prodotti</a>
+                        </div>
+                    </div>
+                `;
+                
+                // Add to cart functionality
+                document.querySelector('.btn-add-to-cart-detail').addEventListener('click', function() {
+                    const productData = JSON.parse(this.dataset.product);
+                    
+                    const existing = cartObj.cart.find(p => p.id === productData.id);
+                    if (existing) {
+                        existing.qty += 1;
+                    } else {
+                        cartObj.cart.push({ ...productData, qty: 1 });
+                    }
+                    
+                    cartObj.saveCart();
+                    cartObj.updateCart();
+                    
+                    const cartSidebar = document.getElementById('cartSidebar');
+                    if (cartSidebar) cartSidebar.classList.add('active');
+                    
+                    this.textContent = '✓ Aggiunto al carrello';
+                    this.style.background = '#27ae60';
+                    setTimeout(() => {
+                        this.textContent = 'Aggiungi al carrello';
+                        this.style.background = '';
+                    }, 1500);
+                });
+            }
+        } else {
+            window.location.href = 'notfound.html';
+        }
+    } else {
+        window.location.href = 'notfound.html';
+    }
+}
+
+// ==================== OFFERTE PAGE ====================
+if (document.getElementById('productsContainer') && window.location.pathname.includes('offerte')) {
+    const offerProducts = PRODUCTS.filter(p => p.discount);
+    
+    if (offerProducts.length === 0) {
+        document.getElementById('productsContainer').innerHTML = 
+            '<p style="text-align:center; color:#aaa; padding:40px; grid-column:1/-1;">Nessuna offerta disponibile al momento</p>';
+    } else {
+        displayProducts(offerProducts, 'productsContainer');
+    }
+}
