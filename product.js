@@ -1,44 +1,44 @@
 // ==================== PRODUCTS DATABASE CON ID ====================
-const DEFAULT_PRODUCTS = [
-    {
-        id: 'prod-001',
-        name: "MIRA Alpha RTX 5090",
-        price: 3499.99,
-        discountPrice: null,
-        discount: false,
-        desc: "Il massimo delle prestazioni con RTX 5090",
-        img: "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=500",
-        category: "novità",
-        tags: ["bestseller", "rtx5000", "novità"],
+const DEFAULT_PRODUCTS = [{
+        id: "prod-0" + Math.floor(Math.random() * 9 + 1),
+        name: "ORION",
+        price: 1499.49,
+        discountPrice: 1299.99,
+        discount: true,
+        desc: "Potenza estrema con componenti di ultima generazione",
+        img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500",
+        category: "gaming",
+        tags: ["performance", "gaming", "offerta"],
         specs: {
-            cpu: "Intel Core i9-14900K",
-            gpu: "NVIDIA RTX 5090 24GB",
-            ram: "64GB DDR5 6000MHz",
+            cpu: "AMD Ryzen 7 9800X3D",
+            gpu: "NVIDIA RTX 5070 Ti 16GB",
+            ram: "32GB DDR5 6400MHz",
+            storage: "1TB NVMe Gen4",
+            psu: "850W 80+ Gold"
+        }
+
+    },
+    {
+        id: 'prod-002',
+        name: "NOVA",
+        price: 2999.99,
+        discountPrice: 2699.99,
+        discount: true,
+        desc: "Potenza AMD di ultima generazione con GPU migliorata",
+        img: "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=500",
+        category: "novità",
+        tags: ["rx9000", "novità", "high-end"],
+        specs: {
+            cpu: "AMD Ryzen 9 7950X3D",
+            gpu: "AMD RX 9080 XT 24GB",
+            ram: "32GB DDR5 6000MHz",
             storage: "2TB NVMe Gen5",
             psu: "1200W 80+ Platinum"
         }
     },
     {
-        id: 'prod-002',
-        name: "MIRA Beta RX 9070 XT",
-        price: 2799.99,
-        discountPrice: 2499.99,
-        discount: true,
-        desc: "Potenza AMD di ultima generazione",
-        img: "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=500",
-        category: "novità",
-        tags: ["rx9000", "pronta-consegna", "novità"],
-        specs: {
-            cpu: "AMD Ryzen 9 7950X3D",
-            gpu: "AMD RX 9070 XT 24GB",
-            ram: "32GB DDR5 6000MHz",
-            storage: "2TB NVMe Gen4",
-            psu: "1000W 80+ Gold"
-        }
-    },
-    {
         id: 'prod-003',
-        name: "MIRA White Edition",
+        name: "QUANTUM",
         price: 2299.99,
         discountPrice: null,
         discount: false,
@@ -56,7 +56,7 @@ const DEFAULT_PRODUCTS = [
     },
     {
         id: 'prod-004',
-        name: "MIRA Console Killer",
+        name: "NEBULA",
         price: 1299.99,
         discountPrice: 1099.99,
         discount: true,
@@ -74,7 +74,7 @@ const DEFAULT_PRODUCTS = [
     },
     {
         id: 'prod-005',
-        name: "MIRA Gaming Pro",
+        name: "Delta",
         price: 1799.99,
         discountPrice: null,
         discount: false,
@@ -92,7 +92,7 @@ const DEFAULT_PRODUCTS = [
     },
     {
         id: 'prod-006',
-        name: "MIRA Creator Station",
+        name: "SOLIS",
         price: 3299.99,
         discountPrice: 2999.99,
         discount: true,
@@ -108,6 +108,7 @@ const DEFAULT_PRODUCTS = [
             psu: "1000W 80+ Platinum"
         }
     }
+
 ];
 
 // Inizializza prodotti
@@ -160,14 +161,14 @@ function displayProducts(products, containerId = 'productsGrid') {
     }
 
     products.forEach(prod => {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        
-        const finalPrice = prod.discount ? prod.discountPrice : prod.price;
-        const avgRating = getAverageRating(prod.id);
-        const reviewCount = getReviewCount(prod.id);
-        
-        card.innerHTML = `
+                const card = document.createElement('div');
+                card.className = 'product-card';
+
+                const finalPrice = prod.discount ? prod.discountPrice : prod.price;
+                const avgRating = getAverageRating(prod.id);
+                const reviewCount = getReviewCount(prod.id);
+
+                card.innerHTML = `
             ${prod.discount ? '<span class="discount-badge">OFFERTA</span>' : ''}
             <div class="product-image">
                 <img src="${prod.img}" alt="${prod.name}" loading="lazy">

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +11,8 @@
             padding: 0;
             box-sizing: border-box;
         }
-
-        :root {
+        
+         :root {
             --black: #0a0a0a;
             --white: #ffffff;
             --gray-50: #f9fafb;
@@ -20,15 +21,15 @@
             --gray-900: #111827;
             --purple-600: #9333ea;
         }
-
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--white);
             color: var(--gray-900);
             line-height: 1.6;
         }
-
         /* Header */
+        
         .header {
             background: var(--black);
             border-bottom: 1px solid #1f2937;
@@ -36,7 +37,7 @@
             top: 0;
             z-index: 1000;
         }
-
+        
         .nav-container {
             max-width: 1440px;
             margin: 0 auto;
@@ -46,7 +47,7 @@
             justify-content: space-between;
             height: 72px;
         }
-
+        
         .logo {
             font-size: 24px;
             font-weight: 700;
@@ -54,13 +55,13 @@
             text-decoration: none;
             letter-spacing: 2px;
         }
-
+        
         .nav-links {
             display: flex;
             gap: 32px;
             list-style: none;
         }
-
+        
         .nav-links a {
             color: #9ca3af;
             text-decoration: none;
@@ -68,17 +69,17 @@
             font-weight: 500;
             transition: color 0.2s;
         }
-
+        
         .nav-links a:hover {
             color: var(--white);
         }
-
+        
         .nav-actions {
             display: flex;
             align-items: center;
             gap: 16px;
         }
-
+        
         .language-selector {
             display: flex;
             align-items: center;
@@ -91,12 +92,12 @@
             color: #9ca3af;
             font-size: 14px;
         }
-
+        
         .language-selector:hover {
             border-color: #4b5563;
             color: var(--white);
         }
-
+        
         .icon-btn {
             background: transparent;
             border: 1px solid #374151;
@@ -110,20 +111,20 @@
             justify-content: center;
             transition: all 0.2s;
         }
-
+        
         .icon-btn:hover {
             border-color: #4b5563;
             color: var(--white);
         }
-
         /* Hero Section */
+        
         .hero-about {
             background: linear-gradient(180deg, var(--black) 0%, #1a1a1a 100%);
             padding: 120px 24px 80px;
             text-align: center;
             color: var(--white);
         }
-
+        
         .hero-about h1 {
             font-size: clamp(40px, 6vw, 72px);
             font-weight: 700;
@@ -131,21 +132,21 @@
             letter-spacing: -2px;
             line-height: 1.1;
         }
-
+        
         .hero-about p {
             font-size: clamp(16px, 2vw, 20px);
             color: #9ca3af;
             max-width: 700px;
             margin: 0 auto;
         }
-
         /* Content Section */
+        
         .content-section {
             max-width: 1200px;
             margin: 0 auto;
             padding: 100px 24px;
         }
-
+        
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -153,7 +154,7 @@
             align-items: center;
             margin-bottom: 100px;
         }
-
+        
         .content-image {
             width: 100%;
             aspect-ratio: 4/3;
@@ -164,14 +165,14 @@
             justify-content: center;
             padding: 40px;
         }
-
+        
         .content-image svg {
             width: 100%;
             height: 100%;
             max-width: 200px;
             color: white;
         }
-
+        
         .content-text h2 {
             font-size: clamp(28px, 4vw, 40px);
             font-weight: 700;
@@ -179,19 +180,19 @@
             letter-spacing: -1px;
             color: var(--black);
         }
-
+        
         .content-text p {
             font-size: 16px;
             color: var(--gray-600);
             margin-bottom: 16px;
             line-height: 1.8;
         }
-
+        
         .content-text ul {
             list-style: none;
             margin-top: 32px;
         }
-
+        
         .content-text li {
             padding: 16px 0;
             border-bottom: 1px solid var(--gray-100);
@@ -200,7 +201,7 @@
             gap: 16px;
             font-size: 15px;
         }
-
+        
         .content-text li::before {
             content: "✓";
             display: flex;
@@ -214,46 +215,46 @@
             font-weight: 700;
             flex-shrink: 0;
         }
-
         /* Stats Section */
+        
         .stats-section {
             background: var(--gray-50);
             padding: 80px 24px;
         }
-
+        
         .stats-container {
             max-width: 1200px;
             margin: 0 auto;
         }
-
+        
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 40px;
             text-align: center;
         }
-
+        
         .stat-item h3 {
             font-size: clamp(36px, 5vw, 56px);
             font-weight: 700;
             color: var(--purple-600);
             margin-bottom: 8px;
         }
-
+        
         .stat-item p {
             font-size: 14px;
             color: var(--gray-600);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
         /* Team Section */
+        
         .team-section {
             padding: 100px 24px;
             max-width: 1200px;
             margin: 0 auto;
         }
-
+        
         .team-section h2 {
             font-size: clamp(32px, 4vw, 48px);
             font-weight: 700;
@@ -261,7 +262,7 @@
             margin-bottom: 64px;
             color: var(--black);
         }
-
+        
         .team-card {
             display: grid;
             grid-template-columns: 300px 1fr;
@@ -271,9 +272,9 @@
             border: 1px solid var(--gray-100);
             border-radius: 16px;
             padding: 48px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
-
+        
         .team-image {
             width: 100%;
             aspect-ratio: 1;
@@ -284,20 +285,20 @@
             justify-content: center;
             padding: 40px;
         }
-
+        
         .team-image svg {
             width: 100%;
             height: 100%;
             color: white;
         }
-
+        
         .team-info h3 {
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 8px;
             color: var(--black);
         }
-
+        
         .team-info .role {
             font-size: 14px;
             color: var(--purple-600);
@@ -305,39 +306,39 @@
             letter-spacing: 1px;
             margin-bottom: 24px;
         }
-
+        
         .team-info p {
             font-size: 16px;
             color: var(--gray-600);
             line-height: 1.8;
         }
-
         /* CTA Section */
+        
         .cta-section {
             background: var(--black);
             color: var(--white);
             padding: 100px 24px;
             text-align: center;
         }
-
+        
         .cta-content {
             max-width: 800px;
             margin: 0 auto;
         }
-
+        
         .cta-content h2 {
             font-size: clamp(32px, 5vw, 48px);
             font-weight: 700;
             margin-bottom: 24px;
             letter-spacing: -1px;
         }
-
+        
         .cta-content p {
             font-size: 18px;
             color: #9ca3af;
             margin-bottom: 40px;
         }
-
+        
         .btn-cta {
             display: inline-block;
             padding: 16px 40px;
@@ -349,69 +350,69 @@
             font-size: 16px;
             transition: transform 0.2s;
         }
-
+        
         .btn-cta:hover {
             transform: translateY(-2px);
         }
-
         /* Footer */
+        
         .footer {
             background: var(--black);
             color: #9ca3af;
             padding: 80px 24px 40px;
         }
-
+        
         .footer-container {
             max-width: 1440px;
             margin: 0 auto;
         }
-
+        
         .footer-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 60px;
             margin-bottom: 60px;
         }
-
+        
         .footer-column h4 {
             color: var(--white);
             margin-bottom: 20px;
             font-size: 14px;
             font-weight: 600;
         }
-
+        
         .footer-column ul {
             list-style: none;
         }
-
+        
         .footer-column ul li {
             margin-bottom: 12px;
         }
-
+        
         .footer-column a {
             color: #9ca3af;
             text-decoration: none;
             font-size: 14px;
             transition: color 0.2s;
         }
-
+        
         .footer-column a:hover {
             color: var(--white);
         }
-
+        
         .footer-brand p {
             color: #9ca3af;
             line-height: 1.7;
             font-size: 14px;
         }
-
+        
         .footer-social {
             display: flex;
             gap: 16px;
             justify-content: center;
             margin-bottom: 40px;
         }
-
+        
         .footer-social a {
             width: 40px;
             height: 40px;
@@ -424,107 +425,96 @@
             color: #9ca3af;
             transition: all 0.2s;
         }
-
+        
         .footer-social a:hover {
             background: var(--white);
             border-color: var(--white);
             color: var(--black);
         }
-
+        
         .footer-bottom {
             text-align: center;
             padding-top: 40px;
             border-top: 1px solid #1f2937;
         }
-
+        
         .footer-bottom p {
             margin-bottom: 16px;
             font-size: 14px;
         }
-
+        
         .footer-links {
             display: flex;
             gap: 24px;
             justify-content: center;
             flex-wrap: wrap;
         }
-
+        
         .footer-links a {
             color: #6b7280;
             text-decoration: none;
             font-size: 12px;
             transition: color 0.2s;
         }
-
+        
         .footer-links a:hover {
             color: var(--white);
         }
-
         /* Responsive */
+        
         @media (max-width: 1024px) {
             .content-grid {
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
-
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 32px;
             }
-
             .team-card {
                 grid-template-columns: 1fr;
                 gap: 32px;
             }
         }
-
+        
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
-
             .hero-about {
                 padding: 80px 24px 60px;
             }
-
             .content-section {
                 padding: 60px 24px;
             }
-
             .stats-grid {
                 grid-template-columns: 1fr;
                 gap: 32px;
             }
-
             .team-card {
                 padding: 32px 24px;
             }
-
             .team-image {
                 max-width: 200px;
                 margin: 0 auto;
             }
-
             .footer-grid {
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
         }
-
         /* Mobile Menu */
+        
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
-
             .nav-actions {
                 gap: 8px;
             }
-
             .language-selector span {
                 display: none;
             }
-
             .language-selector {
                 padding: 8px;
                 min-width: 40px;
@@ -533,13 +523,13 @@
         }
     </style>
 </head>
+
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="nav-container">
             <a href="index.html" class="logo">MIRA</a>
             <div class="nav-divider"></div>
-            
+
             <nav>
                 <ul class="nav-links">
                     <li><a href="pcgaming.html">PC</a></li>
@@ -594,7 +584,6 @@
                 </svg>
             </div>
             <div class="content-text">
-                <h2>La Nostra Missione</h2>
                 <p>In MIRA crediamo che ogni gamer meriti un PC perfettamente ottimizzato per le proprie esigenze. Non vendiamo solo hardware, ma creiamo esperienze di gioco.</p>
                 <p>Ogni configurazione è studiata nei minimi dettagli per garantire prestazioni ottimali, stabilità e durata nel tempo.</p>
                 <ul>
@@ -631,19 +620,19 @@
         <div class="stats-container">
             <div class="stats-grid">
                 <div class="stat-item">
-                    <h3>500+</h3>
-                    <p>PC Assemblati</p>
+                    <h3>100%</h3>
+                    <p>Un livello di soddisfazione tra i più alti del settore</p>
                 </div>
                 <div class="stat-item">
-                    <h3>98%</h3>
-                    <p>Clienti Soddisfatti</p>
+                    <h3>Affidabilità</h3>
+                    <p>Una lunga serie di configurazioni create per ogni esigenza</p>
                 </div>
                 <div class="stat-item">
                     <h3>24/7</h3>
                     <p>Supporto Disponibile</p>
                 </div>
                 <div class="stat-item">
-                    <h3>3 Anni</h3>
+                    <h3>5 Anni</h3>
                     <p>Di Esperienza</p>
                 </div>
             </div>
@@ -660,7 +649,7 @@
                 </svg>
             </div>
             <div class="team-info">
-                <h3>Francesco</h3>
+                <h3>Francesco Minutiello</h3>
                 <p class="role">Founder & CEO</p>
                 <p>Con anni di esperienza nell'assemblaggio e ottimizzazione di PC gaming, ho fondato MIRA con l'obiettivo di rendere il gaming di alta qualità accessibile a tutti.</p>
                 <p>La mia passione per la tecnologia e il gaming mi spinge a creare configurazioni sempre all'avanguardia, testando personalmente ogni build prima della consegna.</p>
@@ -733,25 +722,8 @@
             </div>
         </div>
     </footer>
-    <!-- Cart Sidebar -->
-    <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h3>Carrello</h3>
-            <button class="cart-close" id="cartClose">✕</button>
-        </div>
-        <div class="cart-content" id="cartContent">
-            <p class="cart-empty">Il tuo carrello è vuoto</p>
-        </div>
-    </div>
-
-    <!-- Search Overlay -->
-    <div class="search-overlay" id="searchOverlay">
-        <div class="search-container">
-            <input type="text" placeholder="Cerca..." class="search-input" id="mainSearchInput">
-            <button class="search-close" id="searchClose"></button>
-        </div>
-    </div>
 
     <script src="script.js"></script>
 </body>
+
 </html>
