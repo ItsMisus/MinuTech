@@ -413,7 +413,7 @@ if (window.location.pathname.includes('risultati.html')) {
                 pageTitle.textContent = `Risultati per "${searchQuery}"`;
             }
 
-            const RESULTS_PER_PAGE = 12;
+            const RESULTS_PER_PAGE = 9;
             let currentPage = 1;
 
             function displayResults(page) {

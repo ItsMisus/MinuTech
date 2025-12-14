@@ -51,7 +51,7 @@ switch ($method) {
  */
 function getProducts($db, $params) {
     $page = isset($params['page']) ? max(1, (int)$params['page']) : 1;
-    $limit = isset($params['limit']) ? min(50, max(1, (int)$params['limit'])) : 12;
+    $limit = isset($params['limit']) ? min(50, max(1, (int)$params['limit'])) : 100;
     $offset = ($page - 1) * $limit;
     
     $where = ['p.is_active = 1'];
