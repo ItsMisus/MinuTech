@@ -1,6 +1,6 @@
 /**
- * MIRA E-Commerce - Carrello JavaScript
- * Gestione carrello con apertura automatica e stile NZXT
+ * MIRA E-Commerce - Carrello JavaScript AGGIORNATO
+ * Con apertura automatica e badge dinamico
  */
 
 // ============================================================================
@@ -22,6 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Renderizza carrello
     renderCart();
+    
+    // Sync con server se autenticato
+    const token = localStorage.getItem('miraToken');
+    if (token) {
+        setTimeout(() => {
+            syncCartWithServer();
+        }, 500);
+    }
 });
 
 // ============================================================================
@@ -63,7 +71,10 @@ function setupCartListeners() {
     // Bottone carrello header
     const cartBtn = document.getElementById('cartBtn');
     if (cartBtn) {
-        cartBtn.addEventListener('click', openCart);
+        cartBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openCart();
+        });
     }
     
     // Bottone chiudi
@@ -76,6 +87,14 @@ function setupCartListeners() {
     const overlay = document.getElementById('cartOverlay');
     if (overlay) {
         overlay.addEventListener('click', closeCart);
+    }
+    
+    // Previeni chiusura quando si clicca dentro il carrello
+    const sidebar = document.getElementById('cartSidebar');
+    if (sidebar) {
+        sidebar.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
     }
 }
 
@@ -96,9 +115,9 @@ function addToCart(product, quantity = 1) {
         cart.push({
             id: product.id,
             name: product.name,
-            description: product.description,
+            description: product.description || product.desc || '',
             price: product.price,
-            image_url: product.image_url,
+            image_url: product.image_url || product.img,
             quantity: quantity
         });
     }
@@ -107,8 +126,14 @@ function addToCart(product, quantity = 1) {
     saveCart();
     renderCart();
     
-    // APRI AUTOMATICAMENTE IL CARRELLO
+    // ✅ APRI AUTOMATICAMENTE IL CARRELLO
     openCart();
+    
+    // Sync con server se autenticato
+    const token = localStorage.getItem('miraToken');
+    if (token) {
+        syncItemWithServer(product.id, quantity);
+    }
     
     console.log('✅ Carrello aggiornato:', cart);
 }
@@ -117,6 +142,13 @@ function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
     saveCart();
     renderCart();
+    
+    // Sync con server
+    const token = localStorage.getItem('miraToken');
+    if (token) {
+        removeItemFromServer(productId);
+    }
+    
     console.log('🗑️ Prodotto rimosso');
 }
 
@@ -130,6 +162,12 @@ function updateQuantity(productId, newQuantity) {
             item.quantity = newQuantity;
             saveCart();
             renderCart();
+            
+            // Sync con server
+            const token = localStorage.getItem('miraToken');
+            if (token) {
+                syncItemWithServer(productId, newQuantity);
+            }
         }
     }
 }
@@ -188,6 +226,8 @@ function createCartItem(item) {
     const div = document.createElement('div');
     div.className = 'cart-item';
     
+    const description = item.description ? item.description.substring(0, 50) + '...' : '';
+    
     div.innerHTML = `
         <div class="cart-item-image">
             <img src="${item.image_url}" 
@@ -196,7 +236,7 @@ function createCartItem(item) {
         </div>
         <div class="cart-item-details">
             <h4 class="cart-item-name">${item.name}</h4>
-            <p class="cart-item-desc">${item.description ? item.description.substring(0, 50) + '...' : ''}</p>
+            ${description ? `<p class="cart-item-desc">${description}</p>` : ''}
             <div class="cart-item-price">€${parseFloat(item.price).toFixed(2)}</div>
             <div class="cart-item-quantity">
                 <div class="quantity-controls">
@@ -213,32 +253,106 @@ function createCartItem(item) {
 }
 
 function updateCartFooter(total) {
-    const footerValue = document.querySelector('.cart-subtotal-value');
-    if (footerValue) {
-        footerValue.textContent = `€${total.toFixed(2)}`;
-    }
+    // Aggiorna il subtotal in tutte le posizioni
+    const subtotalValues = document.querySelectorAll('.cart-subtotal-value');
+    subtotalValues.forEach(el => {
+        el.textContent = `€${total.toFixed(2)}`;
+    });
 }
 
 function updateCartBadge() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     
-    // Aggiorna badge se esiste
-    let badge = document.querySelector('.cart-badge');
+    // Trova o crea badge per TUTTE le icone carrello
+    const cartBtns = document.querySelectorAll('#cartBtn');
     
-    if (totalItems > 0) {
-        if (!badge) {
-            badge = document.createElement('span');
-            badge.className = 'cart-badge';
-            const cartBtn = document.getElementById('cartBtn');
-            if (cartBtn) {
+    cartBtns.forEach(cartBtn => {
+        let badge = cartBtn.querySelector('.cart-badge');
+        
+        if (totalItems > 0) {
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'cart-badge';
                 cartBtn.style.position = 'relative';
                 cartBtn.appendChild(badge);
             }
+            badge.textContent = totalItems;
+            badge.style.display = 'flex';
+        } else if (badge) {
+            badge.style.display = 'none';
         }
-        badge.textContent = totalItems;
-        badge.style.display = 'flex';
-    } else if (badge) {
-        badge.style.display = 'none';
+    });
+}
+
+// ============================================================================
+// SYNC CON SERVER
+// ============================================================================
+async function syncCartWithServer() {
+    const token = localStorage.getItem('miraToken');
+    if (!token || !window.MiraAPI) return;
+
+    try {
+        console.log('🔄 Sincronizzazione carrello con server...');
+        
+        // Carica carrello dal server
+        const response = await window.MiraAPI.getCart();
+        
+        if (response.success && response.data.items) {
+            // Converti formato server → locale
+            const serverCart = response.data.items.map(item => ({
+                id: item.product_id,
+                name: item.product_name,
+                description: '',
+                price: item.unit_price,
+                image_url: item.image_url,
+                quantity: item.quantity
+            }));
+            
+            // Se il carrello locale è vuoto, carica quello del server
+            if (cart.length === 0 && serverCart.length > 0) {
+                cart = serverCart;
+                saveCart();
+                renderCart();
+                console.log('✅ Carrello caricato dal server');
+            } else if (cart.length > 0) {
+                // Sync carrello locale → server
+                for (const item of cart) {
+                    try {
+                        await window.MiraAPI.addToCart(item.id, item.quantity);
+                    } catch (error) {
+                        console.error('Errore sync item:', item.id, error);
+                    }
+                }
+                console.log('✅ Carrello locale sincronizzato con server');
+            }
+        }
+        
+    } catch (error) {
+        console.error('❌ Errore sincronizzazione carrello:', error);
+    }
+}
+
+async function syncItemWithServer(productId, quantity) {
+    const token = localStorage.getItem('miraToken');
+    if (!token || !window.MiraAPI) return;
+
+    try {
+        await window.MiraAPI.addToCart(productId, quantity);
+    } catch (error) {
+        console.error('Errore sync item con server:', error);
+    }
+}
+
+async function removeItemFromServer(productId) {
+    const token = localStorage.getItem('miraToken');
+    if (!token || !window.MiraAPI) return;
+
+    try {
+        // Questo richiede l'item_id, non product_id
+        // Per ora loggiamo solo l'errore
+        console.log('Rimozione item dal server non implementata');
+    } catch (error) {
+        console.error('Errore rimozione item dal server:', error);
     }
 }
 
@@ -252,4 +366,4 @@ window.clearCart = clearCart;
 window.openCart = openCart;
 window.closeCart = closeCart;
 
-console.log('✅ Carrello script caricato');
+console.log('✅ Carrello script caricato con apertura automatica');
